@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaEdit</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- CDN アイコン読み込み -->
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css">
+</head>
+<body>
+    <!-- タイトル部分 -->
+    <div class="head">
+        <span class="text1">Edit Image</span>
+        <span class="text2">simple editer</span>
+    </div>
+    <!-- メイン -->
+    <div class="container disable">
+        <div class="wrapper">
+            <div class="preview-image">
+                <img src="uploadfile.svg" alt="preview-img">
+            </div>
+            <div class="slider">
+                <div class="filter-info">
+                    <p class="name"></p>
+                    <p class="value"></p>
+                </div>
+                <input type="range" value="100" min="0" max="200">
+            </div>
+            <div class="editor-panel">
+                <div class="filter">
+                    <label class="title">Filters</label>
+                    <div class="options">
+                        <button id="brightness" class="active">輝 度</button>
+                        <button id="saturation">彩 度</button>
+                        <button id="inversion">色相の反転</button>
+                        <button id="grayscale">グレスケ</button>
+                    </div>
+
+                </div>
+                <div class="rotate">
+                    <label class="title">回転：反転</label>
+                    <div class="options">
+                        <button id="left"><i class="las la-undo-alt"></i></button>
+                        <button id="right"><i class="las la-redo-alt"></i></button>
+                        <button id="horizontal"><i class='bx bx-reflect-vertical'></i></button>
+                        <button id="vertical"><i class='bx bx-reflect-horizontal' ></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="controls">
+            <button class="reset-filter">Reset Filters</button>
+            <div class="row">
+                <input type="file" class="file-input" accept="image/*" hidden>
+                <button class="choose-img">Upload Image</button>
+                <button class="save-img">Save Image</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    
+</body>
+</html>
