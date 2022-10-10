@@ -63,7 +63,7 @@ filterOptions.forEach(option => {
 
 //フィルターの値を書き換える
 function updateFilter(){
-    filterValue.innterText = `${filterSlider.value}%`;
+    filterValue.innerText = `${filterSlider.value}%`;
     const selectedFilter = document.querySelector(".filter .active");
 
     if (selectedFilter.id === "brightness") {
