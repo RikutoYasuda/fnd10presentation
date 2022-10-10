@@ -13,21 +13,22 @@ chooseBtn = document.querySelector(".choose-img"),
 saveBtn = document.querySelector(".save-img");
 
 //デフォルトの数値の定義
-let brightness = "100", saturation = "100", inversion = "0", grascale = "0";
+let brightness = "100", saturation = "100", inversion = "0", grayscale = "0";
 let rotate = 0, flipHorizontal = 1 , flipVertical = 1;
 
 
-//loadImageにファイル読み込みの関数を格納
+//lordImage =ファイル読み込みの関数
 const lordImage = function(){
-    let file = fileInput.files[0];
-    if(!file) return;
-    previewImg.src = URL.createObjectURL(file);
+    let file = fileInput.files[0];                          //ノードのファイルリスト内の最初のファイルを File オブジェクトとして取得する
+    if(!file) return;                                       //ファイルが0じゃなかったら
+    previewImg.src = URL.createObjectURL(file);             //引数で指定されたオブジェクトを表す URL を含む DOMString を生成
     previewImg.addEventListener("load",function(){
-        resetBtn.click();
-        document.querySelector(".container").classList.remove("disable")
+        resetBtn.click();//リセットボタンのマウスクリックをシミュレート
+        document.querySelector(".container").classList.remove("disable")//disableクラスを削除
     });
 }
 
+//setFilter =スタイルを書き換える関数
 const setFilter = () => {
     previewImg.style.transform = `rotate(${rotate}deg) scale(${flipHorizontal}, ${flipVertical})`;
     previewImg.style.filter = `brightness(${brightness}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%)`;
@@ -39,22 +40,22 @@ filterOptions.forEach(option => {
         document.querySelector(".active").classList.remove("active");
         option.classList.add("active");
         filterName.innerText = option.innerText;
-
+        //if文で触っているバーの値変更
         if(option.id === "brightness") {
-            filterSlider.max = "200";
             filterSlider.value = brightness;
+            filterSlider.max = "200";
             filterValue.innerText = `${brightness}%`;
         } else if(option.id === "saturation") {
-            filterSlider.max = "200";
             filterSlider.value = saturation;
+            filterSlider.max = "200";
             filterValue.innerText = `${saturation}%`
         } else if(option.id === "inversion") {
-            filterSlider.max = "100";
             filterSlider.value = inversion;
+            filterSlider.max = "100";
             filterValue.innerText = `${inversion}%`;
         } else {
-            filterSlider.max = "100";
             filterSlider.value = grayscale;
+            filterSlider.max = "100";
             filterValue.innerText = `${grayscale}%`;
         }
     });
@@ -92,8 +93,10 @@ rotateBtn.forEach(option => {
         setFilter();
     });
 });
+//horizontalが90degの時にどうやって高さ取得したらいいの…
 
 
+//各値をDefaultにセットし直す
 const resetFilter  = function(){
     brightness = "100";
     saturation = "100";
@@ -102,10 +105,11 @@ const resetFilter  = function(){
     rotate = 0;
     flipHorizontal = 1;
     flipVertical = 1;
-    filterOptions[0].click();
+    filterOptions[0].click();//輝度にする
     setFilter();
 }
 
+//画像を描画して保存する
 const saveImage = function(){
     const canvas = document.createElement("canvas");//canvasを生成
     const context = canvas.getContext("2d");//描画させるやつ
@@ -122,6 +126,7 @@ const saveImage = function(){
     // drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh)
     context.drawImage(previewImg, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
     
+    //保存
     const link = document.createElement("a");
     link.download = "image.jpg";
     link.href = canvas.toDataURL();
@@ -129,8 +134,8 @@ const saveImage = function(){
 
 }
 
-filterSlider.addEventListener("input", updateFilter);
 resetBtn.addEventListener("click", resetFilter);
 saveBtn.addEventListener("click", saveImage);
+filterSlider.addEventListener("input", updateFilter);
 fileInput.addEventListener("change", lordImage);
 chooseBtn.addEventListener("click", () => fileInput.click());
