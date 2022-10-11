@@ -2,12 +2,12 @@
 // 各パーツの情報を変数に格納する
 
 const fileInput = document.querySelector(".file-input"),
-filterOptions = document.querySelectorAll(".filter button"),
+previewImg = document.querySelector(".preview-image img"),
+filterSlider = document.querySelector(".slider input"),
 filterName = document.querySelector(".filter-info .name"),
 filterValue = document.querySelector(".filter-info .value"),
-filterSlider = document.querySelector(".slider input"),
+filterOptions = document.querySelectorAll(".filter button"),
 rotateBtn = document.querySelectorAll(".rotate button"),
-previewImg = document.querySelector(".preview-image img"),
 resetBtn = document.querySelector(".reset-filter"),
 chooseBtn = document.querySelector(".choose-img"),
 saveBtn = document.querySelector(".save-img");
@@ -20,9 +20,9 @@ let rotate = 0, flipHorizontal = 1 , flipVertical = 1;
 //lordImage =ファイル読み込みの関数
 const lordImage = function(){
     let file = fileInput.files[0];                          //ノードのファイルリスト内の最初のファイルを File オブジェクトとして取得する
-    if(!file) return;                                       //ファイルが0じゃなかったら
-    previewImg.src = URL.createObjectURL(file);             //引数で指定されたオブジェクトを表す URL を含む DOMString を生成
-    previewImg.addEventListener("load",function(){
+    if(!file) return;                                       //ファイルが0じゃなかったらなにもしない
+    previewImg.src = URL.createObjectURL(file);             //プレビュー画面のソースにアップされた画像のURLを指定
+    previewImg.addEventListener("load",function(){          //読み込みしたらリセットボタンを押してcontainerクラスのdisableを消してボタン等を触れるようにする
         resetBtn.click();//リセットボタンのマウスクリックをシミュレート
         document.querySelector(".container").classList.remove("disable")//disableクラスを削除
     });
@@ -30,15 +30,15 @@ const lordImage = function(){
 
 //setFilter =スタイルを書き換える関数
 const setFilter = () => {
-    previewImg.style.transform = `rotate(${rotate}deg) scale(${flipHorizontal}, ${flipVertical})`;
+    previewImg.style.transform = `rotate(${rotate}deg) scale(${flipHorizontal}, ${flipVertical})`;//cssのトランスフォームプロパティを変更する
     previewImg.style.filter = `brightness(${brightness}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%)`;
 }
 
 //forEach()メソッドで各オプションのテキストを書き換えてバー上に表示
 filterOptions.forEach(option => {
-    option.addEventListener("click", () => {
+    option.addEventListener("click", () => {                            //アクティブクラスを削除して
         document.querySelector(".active").classList.remove("active");
-        option.classList.add("active");
+        option.classList.add("active");                                 //アクティブをつけ直す
         filterName.innerText = option.innerText;
         //if文で触っているバーの値変更
         if(option.id === "brightness") {
@@ -64,9 +64,9 @@ filterOptions.forEach(option => {
 //フィルターの値を書き換える
 function updateFilter(){
     filterValue.innerText = `${filterSlider.value}%`;
-    const selectedFilter = document.querySelector(".filter .active");
+    const selectedFilter = document.querySelector(".filter .active");//selectedFilterにフィルターでアクティブのものを格納
 
-    if (selectedFilter.id === "brightness") {
+    if (selectedFilter.id === "brightness") {               //もし●●（フィルター名）ならスライダーの値を各変数にいれる
         brightness = filterSlider.value;
     } else if (selectedFilter.id === "saturation") {
         saturation = filterSlider.value;
@@ -75,10 +75,11 @@ function updateFilter(){
     } else {
         grayscale = filterSlider.value;
     }
-    setFilter();
+    setFilter();            //setFilter関数実行
 
 }
 
+//上と同じ
 rotateBtn.forEach(option => {
     option.addEventListener("click", () => {
         if(option.id === "left") {
@@ -106,7 +107,7 @@ const resetFilter  = function(){
     flipHorizontal = 1;
     flipVertical = 1;
     filterOptions[0].click();//輝度にする
-    setFilter();
+    setFilter();            //Defaultの数値に設定
 }
 
 //画像を描画して保存する
@@ -133,6 +134,8 @@ const saveImage = function(){
     link.click();
 
 }
+
+
 
 resetBtn.addEventListener("click", resetFilter);
 saveBtn.addEventListener("click", saveImage);
