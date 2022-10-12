@@ -34,7 +34,7 @@ const setFilter = () => {
     previewImg.style.filter = `brightness(${brightness}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%)`;
 }
 
-//forEach()メソッドで各オプションのテキストを書き換えてバー上に表示
+//forEach()メソッドで各オプションのテキストを書き換えてバー上に表示 selectorAllなので.filter buttonすべてに同じ処理をしたい
 filterOptions.forEach(option => {
     option.addEventListener("click", () => {                            //アクティブクラスを削除して
         document.querySelector(".active").classList.remove("active");
