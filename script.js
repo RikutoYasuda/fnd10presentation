@@ -27,6 +27,7 @@ const lordImage = function(){
         document.querySelector(".container").classList.remove("disable")//disableクラスを削除
     });
 }
+//https://www.youtube.com/watch?v=7WmkYEZc3as
 
 //setFilter =スタイルを書き換える関数
 const setFilter = () => {
